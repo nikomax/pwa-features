@@ -5,7 +5,7 @@
       <div
         v-for="item in $router.options.routes"
         :key="item.__hmrId"
-        class="col-4 my-2"
+        class="col-6 col-md-4 my-2"
       >
         <router-link :to="item.path" class="card shadow h-100">
           <div class="card-body">{{ item.name }}</div>

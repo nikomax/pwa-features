@@ -10,7 +10,6 @@
         <div class="form-floating mb-4">
           <textarea
             class="form-control"
-            placeholder="Leave a comment here"
             id="floatingTextarea"
             v-model="msg"
           ></textarea>

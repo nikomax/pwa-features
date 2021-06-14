@@ -7,6 +7,8 @@
           <div class="card-body">
             <div v-show="!image && !video">
               <video
+                autoplay
+                playsinline
                 ref="video"
                 style="width: 100%; height: 300px; object-fit: cover"
                 class="mb-4"
@@ -37,6 +39,7 @@
               </div>
               <div v-if="video">
                 <video
+                  playsinline
                   :src="video"
                   controls
                   class="mb-4"
@@ -92,12 +95,14 @@ export default {
     },
     stopRecord() {
       this.mediaRecorder.stop();
-      this.mediaRecorder = null;
-      const superBuffer = new Blob(this.recordedChunks, {
-        type: "video/webm;codecs=vp9,opus",
+      setTimeout(() => {
+        const superBuffer = new Blob(this.recordedChunks, {
+          type: "video/webm;codecs=vp9,opus",
+        });
+        this.video = URL.createObjectURL(superBuffer);
+        this.mediaRecorder = null;
+        this.isRecording = false;
       });
-      this.video = URL.createObjectURL(superBuffer);
-      this.isRecording = false;
     },
   },
   mounted() {
