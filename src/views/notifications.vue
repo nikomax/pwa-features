@@ -32,7 +32,8 @@ export default {
     };
   },
   methods: {
-    sendNotification() {
+    async sendNotification() {
+      const reg = await navigator.serviceWorker.getRegistration();
       Notification.requestPermission().then((result) => {
         if (result === "granted") {
           const notifTitle = this.title;
@@ -43,7 +44,7 @@ export default {
             icon: notifImg,
             vibrate: [200, 100, 200, 100, 200, 100, 200],
           };
-          new Notification(notifTitle, options);
+          reg.showNotification(notifTitle, options);
         }
       });
     },

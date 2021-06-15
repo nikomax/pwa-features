@@ -5,6 +5,7 @@ import Network from "../views/network.vue";
 import Audio from "../views/audio.vue";
 import Notifications from "../views/notifications.vue";
 import Geolocation from "../views/geolocation.vue";
+// import Screencapture from "../views/screencapture.vue";
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
     name: "Media",
     component: Media,
   },
+  // {
+  //   path: "/screencapture",
+  //   name: "Screen capture",
+  //   component: Screencapture,
+  // },
   {
     path: "/audio",
     name: "Audio",
@@ -34,7 +40,7 @@ const routes = [
   },
   {
     path: "/geolocation",
-    name: 'Geolocation',
+    name: "Geolocation",
     component: Geolocation,
   },
 ];

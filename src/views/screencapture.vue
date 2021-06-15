@@ -1,6 +1,6 @@
 <template>
   <div class="container py-4">
-    <h1 class="mb-4">Media</h1>
+    <h1 class="mb-4">Screen capture</h1>
     <div class="row">
       <div class="col-12 col-md-4">
         <div class="card shadow">
@@ -14,21 +14,8 @@
                 class="mb-4"
               />
               <div v-if="!isRecording">
-                <button @click="capture" class="btn btn-primary me-1">
-                  photo
-                </button>
                 <button @click="record" class="btn btn-primary me-1">
-                  video
-                </button>
-                <button @click="flipCamera" class="btn btn-primary me-1">
-                  change camera
-                </button>
-                <button
-                  v-if="capabilities.torch"
-                  @click="toggleFlash"
-                  class="btn btn-primary me-1"
-                >
-                  flash
+                  start recording
                 </button>
               </div>
               <button v-else @click="stopRecord" class="btn btn-primary">
@@ -80,42 +67,20 @@ export default {
       recordedChunks: [],
       mediaRecorder: null,
       isRecording: false,
-      front: true,
-      capabilities: {},
-      flash: false,
     };
   },
   computed: {
     constraints() {
       return {
-        video: { facingMode: this.front ? "user" : "environment" },
+        video: true,
       };
     },
   },
   methods: {
-    capture() {
-      const mediaStreamTrack = this.mediaStream.getVideoTracks()[0];
-      const imageCapture = new ImageCapture(mediaStreamTrack);
-      return imageCapture.takePhoto().then((blob) => {
-        this.image = URL.createObjectURL(blob);
-      });
-    },
-    getSupportedMimeType() {
-      const possibleTypes = [
-        "video/webm;codecs=vp9,opus",
-        "video/webm;codecs=vp8,opus",
-        "video/webm;codecs=h264,opus",
-        "video/mp4;codecs=h264,aac",
-        "video/mp4",
-      ];
-      return possibleTypes.find((mimeType) => {
-        return MediaRecorder.isTypeSupported(mimeType);
-      });
-    },
     record() {
       this.recordedChunks = [];
       this.mediaRecorder = new MediaRecorder(this.mediaStream, {
-        mimeType: this.getSupportedMimeType(),
+        mimeType: "video/webm; codecs=vp9",
       });
       this.mediaRecorder.ondataavailable = (event) => {
         if (event.data && event.data.size > 0) {
@@ -129,16 +94,15 @@ export default {
       this.mediaRecorder.stop();
       setTimeout(() => {
         const superBuffer = new Blob(this.recordedChunks, {
-          type: this.getSupportedMimeType(),
+          type: "video/webm",
         });
-        console.log(superBuffer);
         this.video = URL.createObjectURL(superBuffer);
         this.mediaRecorder = null;
         this.isRecording = false;
-      }, 500);
+      });
     },
     async initMedia() {
-      this.mediaStream = await navigator.mediaDevices.getUserMedia(
+      this.mediaStream = await navigator.mediaDevices.getDisplayMedia(
         this.constraints
       );
       this.$refs.video.srcObject = this.mediaStream;
@@ -148,21 +112,9 @@ export default {
       const tracks = this.mediaStream?.getTracks();
       tracks?.map((track) => track.stop());
     },
-    async flipCamera() {
-      this.destroyStream();
-      this.front = !this.front;
-      await this.initMedia();
-    },
-    toggleFlash() {
-      this.flash = !this.flash;
-      const mediaStreamTrack = this.mediaStream.getVideoTracks()[0];
-      mediaStreamTrack.applyConstraints({ advanced: [{ torch: this.flash }] });
-    },
   },
   async mounted() {
     await this.initMedia();
-    const mediaStreamTrack = this.mediaStream.getVideoTracks()[0];
-    this.capabilities = mediaStreamTrack.getCapabilities();
   },
   unmounted() {
     this.destroyStream();
