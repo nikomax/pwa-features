@@ -20,7 +20,13 @@
                 <button @click="record" class="btn btn-primary me-1">
                   video
                 </button>
-                <button @click="flipCamera" class="btn btn-primary me-1">
+                <button
+                  v-if="
+                    capabilities.facingMode && capabilities.facingMode.length
+                  "
+                  @click="flipCamera"
+                  class="btn btn-primary me-1"
+                >
                   change camera
                 </button>
                 <button
@@ -131,7 +137,6 @@ export default {
         const superBuffer = new Blob(this.recordedChunks, {
           type: this.getSupportedMimeType(),
         });
-        console.log(superBuffer);
         this.video = URL.createObjectURL(superBuffer);
         this.mediaRecorder = null;
         this.isRecording = false;

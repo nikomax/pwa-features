@@ -114,6 +114,24 @@ export default {
         'Warning! The "seekto" media session action is not supported.'
       );
     }
+
+    try {
+      navigator.mediaSession.setActionHandler("stop", function () {
+        this.actions.push('> User clicked "Stop" icon.');
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    } catch (error) {
+      console.log('Warning! The "stop" media session action is not supported.');
+    }
+
+    navigator.mediaSession.setActionHandler("previoustrack", () => {
+      this.actions.push('> User clicked "Previous Track" icon.');
+    });
+
+    navigator.mediaSession.setActionHandler("nexttrack", () => {
+      this.actions.push('> User clicked "Next Track" icon.');
+    });
   },
 };
 </script>

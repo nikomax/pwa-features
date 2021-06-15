@@ -36,15 +36,15 @@ export default {
       const reg = await navigator.serviceWorker.getRegistration();
       Notification.requestPermission().then((result) => {
         if (result === "granted") {
-          const notifTitle = this.title;
-          const notifBody = this.msg;
-          const notifImg = "";
+          const notifyTitle = this.title;
+          const notifyBody = this.msg;
+          const notifyImg = "";
           const options = {
-            body: notifBody,
-            icon: notifImg,
+            body: notifyBody,
+            icon: notifyImg,
             vibrate: [200, 100, 200, 100, 200, 100, 200],
           };
-          reg.showNotification(notifTitle, options);
+          reg.showNotification(notifyTitle, options);
         }
       });
     },

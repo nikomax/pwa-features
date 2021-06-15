@@ -1,6 +1,6 @@
 <template>
   <div class="container py-4">
-    <h1 class="mb-4">Screen capture</h1>
+    <h1 class="mb-4">Screen capture(Desktop only)</h1>
     <div class="row">
       <div class="col-12 col-md-4">
         <div class="card shadow">
