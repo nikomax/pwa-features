@@ -1,7 +1,8 @@
 <template>
   <div class="container py-4">
     <h1 class="mb-4">Geolocation</h1>
-    <div class="row">
+    <h4 v-if="!supported">This feature is not supported on this device =(</h4>
+    <div v-else class="row">
       <div class="col-12 col-md-6">
         <div class="card shadow">
           <div class="card-body">
@@ -23,6 +24,7 @@
 export default {
   data() {
     return {
+      supported: true,
       coords: "40.73061,-73.935242",
       textContent: "",
     };
@@ -38,13 +40,13 @@ export default {
   },
   mounted() {
     if (!navigator.geolocation) {
-      this.textContent = "Geolocation is not supported by your browser";
-    } else {
-      this.textContent = "Locating…";
-      navigator.geolocation.getCurrentPosition(this.getCoords, (e) => {
-        console.error(e);
-      });
+      this.supported = false;
+      return;
     }
+    this.textContent = "Locating…";
+    navigator.geolocation.getCurrentPosition(this.getCoords, (e) => {
+      console.error(e);
+    });
   },
 };
 </script>

@@ -1,13 +1,18 @@
 <template>
   <div class="container py-4">
     <h1 class="mb-4">Audio</h1>
-    <audio ref="audio" controls src="chlorine.mp3"></audio>
-    <div class="card mt-2">
-      <div class="card-body">
-        <h4>User actions trough device native player</h4>
-        <ol>
-          <li v-for="(action, index) in actions" :key="index">{{ action }}</li>
-        </ol>
+    <h4 v-if="!supported">This feature is not supported on this device =(</h4>
+    <div v-else>
+      <audio ref="audio" controls src="chlorine.mp3"></audio>
+      <div class="card mt-2">
+        <div class="card-body">
+          <h4>User actions trough device native player</h4>
+          <ol>
+            <li v-for="(action, index) in actions" :key="index">
+              {{ action }}
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
   </div>
@@ -18,6 +23,7 @@ const DEFAULT_SKIP_TIME = 10;
 export default {
   data() {
     return {
+      supported: true,
       actions: [],
     };
   },
@@ -34,6 +40,10 @@ export default {
     },
   },
   mounted() {
+    if (!navigator.mediaSession) {
+      this.supported = false;
+      return;
+    }
     const audio = this.$refs.audio;
     // eslint-disable-next-line no-undef
     navigator.mediaSession.metadata = new MediaMetadata({

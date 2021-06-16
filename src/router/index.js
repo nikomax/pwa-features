@@ -1,13 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import Media from "../views/media.vue";
-import Network from "../views/network.vue";
-import Audio from "../views/audio.vue";
-import Notifications from "../views/notifications.vue";
-import Geolocation from "../views/geolocation.vue";
-import Vibration from "../views/vibration.vue";
-import Screencapture from "../views/screencapture.vue";
-import AudioRecording from "../views/audio-recording.vue";
+import Home from "@/views/Home.vue";
+import Media from "@/views/media.vue";
+import Network from "@/views/network.vue";
+import Audio from "@/views/audio.vue";
+import Notifications from "@/views/notifications.vue";
+import Geolocation from "@/views/geolocation.vue";
+import Vibration from "@/views/vibration.vue";
+import Screencapture from "@/views/screencapture.vue";
+import AudioRecording from "@/views/audio-recording.vue";
+import SpeechSynthesis from "@/views/speech-synthesis.vue";
+import SpeechRecognition from "@/views/speech-recognition.vue";
+import WakeLock from "@/views/wake-lock.vue";
 
 const routes = [
   {
@@ -54,6 +57,21 @@ const routes = [
     path: "/geolocation",
     name: "Geolocation",
     component: Geolocation,
+  },
+  {
+    path: "/speech-synthesis",
+    name: "Speech synthesis",
+    component: SpeechSynthesis,
+  },
+  {
+    path: "/speech-recognition",
+    name: "Speech recognition",
+    component: SpeechRecognition,
+  },
+  {
+    path: "/wake-lock",
+    name: "Wake lock",
+    component: WakeLock,
   },
 ];
 

@@ -1,7 +1,8 @@
 <template>
   <div class="container py-4">
     <h1 class="mb-4">Notifications</h1>
-    <div class="row">
+    <h4 v-if="!supported">This feature is not supported on this device =(</h4>
+    <div v-else class="row">
       <div class="col-12 col-md-6">
         <div class="form-floating mb-4">
           <input class="form-control" id="floatingText" v-model="title" />
@@ -29,6 +30,7 @@ export default {
     return {
       msg: "",
       title: "",
+      supported: true,
     };
   },
   methods: {
@@ -48,6 +50,12 @@ export default {
         }
       });
     },
+  },
+  created() {
+    if (!window.Notification) {
+      this.supported = false;
+      return;
+    }
   },
 };
 </script>

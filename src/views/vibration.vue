@@ -1,16 +1,28 @@
 <template>
   <div class="container py-4">
     <h1 class="mb-4">Vibration</h1>
-    <button class="btn btn-primary" @click="play">play</button>
+    <h4 v-if="!supported">This feature is not supported on this device =(</h4>
+    <button v-else class="btn btn-primary" @click="play">play</button>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      supported: true,
+    };
+  },
   methods: {
     play() {
-      window.navigator.vibrate([200, 100, 200]);
+      navigator.vibrate([200, 100, 200]);
     },
+  },
+  created() {
+    if (!navigator.vibrate) {
+      this.supported = false;
+      return;
+    }
   },
 };
 </script>

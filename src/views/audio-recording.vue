@@ -1,7 +1,8 @@
 <template>
   <div class="container py-4">
     <h1 class="mb-4">Audio Recording</h1>
-    <div class="row">
+    <h4 v-if="!supported">This feature is not supported on this device =(</h4>
+    <div v-else class="row">
       <div class="col-12 col-md-4">
         <div class="card shadow">
           <div class="card-body">
@@ -43,6 +44,7 @@
 export default {
   data() {
     return {
+      supported: true,
       audio: null,
       mediaStream: null,
       recordedChunks: [],
@@ -84,6 +86,10 @@ export default {
     },
   },
   async mounted() {
+    if (!navigator.mediaDevices) {
+      this.supported = false;
+      return;
+    }
     await this.initMedia();
   },
   unmounted() {
