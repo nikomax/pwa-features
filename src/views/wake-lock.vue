@@ -41,7 +41,6 @@ export default {
   created() {
     if (!navigator.wakeLock) {
       this.supported = false;
-      return;
     }
   },
 };

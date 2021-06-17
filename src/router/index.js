@@ -11,6 +11,9 @@ import AudioRecording from "@/views/audio-recording.vue";
 import SpeechSynthesis from "@/views/speech-synthesis.vue";
 import SpeechRecognition from "@/views/speech-recognition.vue";
 import WakeLock from "@/views/wake-lock.vue";
+import Sharing from "@/views/sharing.vue";
+import Contacts from "@/views/contacts.vue";
+import DeviceOrientation from "@/views/device-orientation.vue";
 
 const routes = [
   {
@@ -72,6 +75,21 @@ const routes = [
     path: "/wake-lock",
     name: "Wake lock",
     component: WakeLock,
+  },
+  {
+    path: "/sharing",
+    name: "Web sharing",
+    component: Sharing,
+  },
+  {
+    path: "/contacts",
+    name: "Contacts",
+    component: Contacts,
+  },
+  {
+    path: "/device-orientation",
+    name: "Device orientation",
+    component: DeviceOrientation,
   },
 ];
 

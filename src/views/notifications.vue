@@ -54,7 +54,6 @@ export default {
   created() {
     if (!window.Notification) {
       this.supported = false;
-      return;
     }
   },
 };

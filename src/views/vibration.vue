@@ -21,7 +21,6 @@ export default {
   created() {
     if (!navigator.vibrate) {
       this.supported = false;
-      return;
     }
   },
 };
