@@ -14,6 +14,7 @@ import WakeLock from "@/views/wake-lock.vue";
 import Sharing from "@/views/sharing.vue";
 import Contacts from "@/views/contacts.vue";
 import DeviceOrientation from "@/views/device-orientation.vue";
+import Payment from "@/views/payment.vue";
 
 const routes = [
   {
@@ -90,6 +91,11 @@ const routes = [
     path: "/device-orientation",
     name: "Device orientation",
     component: DeviceOrientation,
+  },
+  {
+    path: "/payment",
+    name: "Payment",
+    component: Payment,
   },
 ];
 

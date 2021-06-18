@@ -126,7 +126,7 @@ export default {
     }
 
     try {
-      navigator.mediaSession.setActionHandler("stop", function () {
+      navigator.mediaSession.setActionHandler("stop", () => {
         this.actions.push('> User clicked "Stop" icon.');
         audio.pause();
         audio.currentTime = 0;

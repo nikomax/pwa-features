@@ -41,7 +41,7 @@ export default {
       text: "Text example",
       url: "https://pwa-features.github.io/",
       result: "",
-      filesArray: null,
+      filesArray: [],
     };
   },
   methods: {
@@ -51,7 +51,9 @@ export default {
     async share() {
       const { title, text, url } = this;
       const data = { title, text, url };
-      this.filesSupport && (data.files = this.filesArray);
+      this.filesSupport &&
+        this.filesArray.length &&
+        (data.files = this.filesArray);
       try {
         await navigator.share(data);
         this.result = "Data shared successfully";

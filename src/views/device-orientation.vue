@@ -3,7 +3,11 @@
     <h1 class="mb-4">Device orientation</h1>
     <h4 v-if="!supported">This feature is not supported on this device =(</h4>
     <div v-else>
-      <button class="btn btn-primary mb-4" @click="activate">
+      <button
+        v-if="permissionNeeded"
+        class="btn btn-primary mb-4"
+        @click="activate"
+      >
         Activate sensors
       </button>
       <div class="mb-4">{{ text }}</div>
@@ -18,6 +22,7 @@ export default {
   data() {
     return {
       supported: true,
+      permissionNeeded: true,
       text: "",
     };
   },
@@ -53,6 +58,12 @@ export default {
     setRotation(x, y, z) {
       this.cube.rotation.set(x, y, z);
     },
+    addListener() {
+      window.addEventListener("deviceorientation", ({ beta, gamma, alpha }) => {
+        this.setRotation(0.4, 0.6, 0);
+        this.cube.rotation.set(beta / 15, gamma / 15, alpha / 15);
+      });
+    },
     async activate() {
       if (
         DeviceOrientationEvent &&
@@ -61,13 +72,7 @@ export default {
         const permissionState =
           await DeviceOrientationEvent.requestPermission();
         if (permissionState === "granted") {
-          window.addEventListener(
-            "deviceorientation",
-            ({ beta, gamma, alpha }) => {
-              this.setRotation(0.4, 0.6, 0);
-              this.cube.rotation.set(beta / 15, gamma / 15, alpha / 15);
-            }
-          );
+          this.addListener();
         } else {
           this.text = "Permission denied";
         }
@@ -78,6 +83,13 @@ export default {
     if (!window.DeviceOrientationEvent) {
       this.supported = false;
       return;
+    }
+    if (
+      DeviceOrientationEvent &&
+      typeof DeviceOrientationEvent.requestPermission !== "function"
+    ) {
+      this.permissionNeeded = false;
+      this.addListener();
     }
     this.init();
     this.render();
