@@ -22,21 +22,27 @@
                 style="width: 100%; height: 300px; object-fit: cover"
                 class="mb-4 d-block"
               />
-              <div v-if="!isRecording">
-                <button @click="scan" class="btn btn-primary me-1">scan</button>
+              <button
+                v-if="!isRecording"
+                @click="scan"
+                class="btn btn-primary me-1"
+              >
+                scan
+              </button>
+              <div v-else>
+                <button @click="stopScan" class="btn btn-primary">
+                  stop scanning
+                </button>
                 <button
                   v-if="
                     capabilities.facingMode && capabilities.facingMode.length
                   "
                   @click="flipCamera"
-                  class="btn btn-primary me-1"
+                  class="btn btn-primary ms-1"
                 >
                   change camera
                 </button>
               </div>
-              <button v-else @click="stopScan" class="btn btn-primary">
-                stop scanning
-              </button>
             </div>
           </div>
         </div>
