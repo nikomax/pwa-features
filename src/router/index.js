@@ -15,6 +15,7 @@ import Sharing from "@/views/sharing.vue";
 import Contacts from "@/views/contacts.vue";
 import DeviceOrientation from "@/views/device-orientation.vue";
 import Payment from "@/views/payment.vue";
+import QRScanner from "@/views/qr-scanner.vue";
 
 const routes = [
   {
@@ -96,6 +97,11 @@ const routes = [
     path: "/payment",
     name: "Payment",
     component: Payment,
+  },
+  {
+    path: "/qr-scanner",
+    name: "QRScanner",
+    component: QRScanner,
   },
 ];
 
