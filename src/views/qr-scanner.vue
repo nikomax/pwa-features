@@ -160,7 +160,7 @@ export default {
     },
   },
   unmounted() {
-    this.destroyStream();
+    this.stopScan();
   },
 };
 </script>
